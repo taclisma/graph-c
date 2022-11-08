@@ -3,30 +3,43 @@
 #include <string.h>
 #include "cidade.h"
 #include "lista.h"
+
+// popula lista adjacente
+void list_adj();
+
+// print lista adj
+void print_adj();
+
+// calcula dist
+void calc();
+
 Tcidade grafo[MAX_VERTICES][MAX_VERTICES];
 int precede[MAX_VERTICES];
 int origem, destino;
 
 int main(void) {
-
-
-	list *lista = (list*) malloc(sizeof(list));
-	if(lista != NULL){
-	init(lista);
+	int i;
+	//array ponteiro de listas
+	list *vet[7];
+	for(i = 0; i < 7; i++){
+		vet[i] = init(); 
+		insert(vet[i], 1);
+		insert(vet[i], 2);
+	}
 	
-	printf("help %i\n\n", empty(lista));
 	
-	insert(lista, 1);
-	printf("help %i\n\n", empty(lista));
-	insert(lista, 2);
-	insert(lista, 3);
+	insert(vet[3], 3);
+	printf("help %i\n\n", empty(vet[0]));
+	printf("help %i\n\n", empty(vet[3]));
 
-	printlist(lista);
-
-	cleanlist(lista);
+	printlist(vet[1]);
+	printlist(vet[3]);
+	for(i = 0; i < 7; i++){
+		cleanlist(vet[i]);
 	}
 
-/*
+
+
 	Inicializa_Grafo(grafo);
 
 	Cria_Aresta(grafo, 0, 1, 1100);
@@ -59,10 +72,25 @@ int main(void) {
 	Le_Origem_Destino(MAX_VERTICES - 1, &origem, &destino);
 
 	printf(" Aqui Implementar Distancia entre %s e %s \n", cidades[origem], cidades[destino]);
-*/
+
 
 
 
 
 	return (0);
+}
+
+// popula lista adjacente
+void list_adj(){
+	//
+}
+
+// print lista adj
+void print_adj(){
+	//
+}
+
+// calcula dist
+void calc(){
+	//
 }

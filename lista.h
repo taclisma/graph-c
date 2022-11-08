@@ -17,10 +17,14 @@ typedef struct list{
 } list;
 
 
-//inicializa lista
-void init(list *l){
-    l->start = NULL;
-	l->end = NULL;   
+//cria lista
+list* init(){
+    list *lista = (list*) malloc(sizeof(list));
+	if(lista != NULL){
+        lista->start = NULL;
+        lista->end = NULL;
+        return lista;
+    }
 }
 
 
