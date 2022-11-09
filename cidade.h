@@ -73,11 +73,11 @@ void lista_adj(Tcidade grafo[][MAX_VERTICES], list **v){
 	printf(" \n Lista de Adjacencias \n");
     for (l = 0; l < MAX_VERTICES; l++) {
         printf("[%s] ->", rotulos[l]);
-        v[l]->self = l;
+        v[l]->selflist = l;
         for (c = 0; c < MAX_VERTICES; c++){
             if (grafo[l][c].cidade_dist != -1){
-                insert(v[l], grafo[l][c].cidade_dist, rotulos[c]);
-                printf(" %s ", rotulos[c] );
+                insert(v[l], c);
+                printf(" %s: %i ", rotulos[c], grafo[l][c].cidade_dist);
 
             }  
         }
@@ -87,9 +87,43 @@ void lista_adj(Tcidade grafo[][MAX_VERTICES], list **v){
 }
 
 //  calc dist
-void calc_dist(Tcidade grafo[][MAX_VERTICES], int o, int d, list **v){
-    printf("viagem direta disponivel: %c\n", grafo[o][d].cidade_adj);
-    printf("")
+int calc_dist(Tcidade grafo[][MAX_VERTICES], int origem, int dest, list **v, int dist){
+    int busca = origem;
+    node *aux = NULL;
+    //v[7] = visitados;
+
+    if(grafo[origem][dest].cidade_adj == 'S'){
+        dist += grafo[origem][dest].cidade_dist;
+        return dist;
+    }
+    else { 
+        aux = v[origem]->start;
+        while(true){
+            busca = aux->self;
+        
+
+            //se busca nao esta na lista de visitados
+            if(!search(v[7], busca)){
+                // ve se o destino é adjacente de busca
+
+                //se destino for adjacente de busca
+                if (search(v[busca], dest)) {
+                    //incrementa distancia
+                    dist += grafo[busca][dest].cidade_dist;
+                    return calc_dist(grafo, busca, dest, v, dist);
+
+                } else {
+                    insert(v[7], busca);
+                    if(aux->next != NULL){
+                        aux = aux->next;
+                        break;
+                    }
+                    else return calc_dist(grafo, v[origem]->start->next->self , dest, v, dist);
+                }
+            }
+        }
+
+    }
 }
 
 

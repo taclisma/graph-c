@@ -18,8 +18,8 @@ int origem, destino;
 int main(void) {
 	int i;
 	//array ponteiro de listas
-	list *vet[7];
-	for(i = 0; i < 7; i++){
+	list *vet[8];
+	for(i = 0; i < 8; i++){
 		vet[i] = init(i); 
 	}
 
@@ -53,9 +53,9 @@ int main(void) {
 	Le_Origem_Destino(MAX_VERTICES - 1, &origem, &destino);
 
 	printf(" Aqui Implementar Distancia entre %s e %s \n", cidades[origem], cidades[destino]);
-	calc_dist(grafo, origem, destino, vet);
-	printlist(vet[origem]);
-	printlist(vet[destino]);
+	printf("%i\n\n", calc_dist(grafo, origem, destino, vet, 0));
+	//printlist(vet[origem]);
+	//printlist(vet[destino]);
 
 
 

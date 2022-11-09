@@ -9,14 +9,14 @@
 
 typedef struct node{
     int dist;
-    char rot[6];
+    int self;
     struct node *next;
  } node;
 
 typedef struct list{
     node *start;
     node *end;
-    int self;
+    int selflist;
 } list;
 
 
@@ -26,7 +26,7 @@ list* init(int i){
 	if(lista != NULL){
         lista->start = NULL;
         lista->end = NULL;
-        lista->self = i;
+        lista->selflist = i;
         return lista;
     }
 }
@@ -38,7 +38,7 @@ bool empty(list *l){
 }
 
 
-bool insert(list* l, int d, char* s){
+bool insert(list* l, int slf){
     node *aux = l->start;
     node *newnode; 
 
@@ -46,8 +46,7 @@ bool insert(list* l, int d, char* s){
     newnode = (node*) malloc(sizeof(node));
     if(!newnode) return false;
     newnode->next = NULL;
-    newnode->dist = d;
-    strcpy(newnode->rot, s);
+    newnode->self = slf;
 
     // insere no inicio
     if(!l->start){ //funciona
@@ -72,23 +71,23 @@ bool insert(list* l, int d, char* s){
 }
 
 
-// imprime lista
-void printlist(list *l){
-    node *aux = l->start;
+/* // imprime lista
+// void printlist(list *l){
+//     node *aux = l->start;
 
-    if(empty(l)){
-        printf("lista vazia\n");
-    } else {
-        printf("[%i]-> ", l->self);
+//     if(empty(l)){
+//         printf("lista vazia\n");
+//     } else {
+//         printf("[%i]-> ", l->self);
 
-        while(aux != NULL){
-            printf("[%s]:%i ", aux->rot, aux->dist);
-            aux = aux->next;
-        }
-    }
+//         while(aux != NULL){
+//             printf("[%s]:%i ", aux->rot, aux->dist);
+//             aux = aux->next;
+//         }
+//     }
 
-    printf("\n");
-}
+//     printf("\n");
+}*/
 
 
 //limpa lista
@@ -101,13 +100,14 @@ void cleanlist(list *l){
     }
 }
 
-bool search(list *l, node *n){
+bool search(list *l, int n){
     node *aux = l->start;
 
     while(aux != NULL){
-        if(aux == n) return true;
-        else return false;
+        if(aux->self == n) return true;
+        else aux = aux->next;
     }
+    return false;
 }
 
 #endif
