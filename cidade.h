@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "lista.h"
 
 #define MAX_VERTICES 7
 
@@ -29,8 +30,7 @@ char rotulos[MAX_VERTICES][6] = {"PoA", "SPa", "Rio", "Vit", "Rec", "Sal", "Nat"
 
 
 // Inicializa_Grafo
-void Inicializa_Grafo(Tcidade grafo[][MAX_VERTICES])
-{
+void Inicializa_Grafo(Tcidade grafo[][MAX_VERTICES]){
  int l, c;
 
  for (l = 0; l < MAX_VERTICES; l++) 
@@ -42,16 +42,14 @@ void Inicializa_Grafo(Tcidade grafo[][MAX_VERTICES])
 }
 
 //Cria_Aresta
-void Cria_Aresta(Tcidade grafo[][MAX_VERTICES], int cid_origem, int cid_destino, int distancia)
-{
- grafo[cid_origem][cid_destino].cidade_adj = 'S';
- grafo[cid_origem][cid_destino].cidade_dist = distancia;
+void Cria_Aresta(Tcidade grafo[][MAX_VERTICES], int cid_origem, int cid_destino, int distancia){
+    grafo[cid_origem][cid_destino].cidade_adj = 'S';
+    grafo[cid_origem][cid_destino].cidade_dist = distancia;
 }
 
 
 //  Imprime_Matriz
-void Imprime_Matriz(Tcidade grafo[][MAX_VERTICES])
-{
+void Imprime_Matriz(Tcidade grafo[][MAX_VERTICES]){
  int l, c;
 
  printf("\n-- Matriz de Adjacencias  --\n");
@@ -67,22 +65,48 @@ void Imprime_Matriz(Tcidade grafo[][MAX_VERTICES])
 	printf("\n\n");
 }
 
-void Le_Origem_Destino(int tam, int *origem, int *destino)
-{
- printf("\n Cidade de Origem  [0..%d]: ",  tam);
- do {
-      scanf("%d",origem);
-     } while (*origem < 0 || *origem > tam);
- printf(" Cidade de Destino [0..%d]: ", tam);
- do {
-      scanf("%d",destino);
-     } while (*destino < 0 || *destino > tam);
+
+//  Imprime lista adj
+void lista_adj(Tcidade grafo[][MAX_VERTICES], list **v){
+    int l, c;
+
+	printf(" \n Lista de Adjacencias \n");
+    for (l = 0; l < MAX_VERTICES; l++) {
+        printf("[%s] ->", rotulos[l]);
+        v[l]->self = l;
+        for (c = 0; c < MAX_VERTICES; c++){
+            if (grafo[l][c].cidade_dist != -1){
+                insert(v[l], grafo[l][c].cidade_dist, rotulos[c]);
+                printf(" %s ", rotulos[c] );
+
+            }  
+        }
+        printf("\n");
+    }
+    printf("\n\n");
+}
+
+//  calc dist
+void calc_dist(Tcidade grafo[][MAX_VERTICES], int o, int d, list **v){
+    printf("viagem direta disponivel: %c\n", grafo[o][d].cidade_adj);
+    printf("")
+}
+
+
+void Le_Origem_Destino(int tam, int *origem, int *destino) {
+    printf("\n Cidade de Origem  [0..%d]: ",  tam);
+    do {
+        scanf("%d",origem);
+    } while (*origem < 0 || *origem > tam);
+        printf(" Cidade de Destino [0..%d]: ", tam);
+    do {
+        scanf("%d",destino);
+    } while (*destino < 0 || *destino > tam);
 }
 
 
 //Imprime_Menu
-void Imprime_Menu(void)
-{
+void Imprime_Menu(void) {
  int i;
 
  printf("\n -- Menu Opcoes de Cidades --\n");  

@@ -4,8 +4,6 @@
 #include "cidade.h"
 #include "lista.h"
 
-// popula lista adjacente
-void list_adj();
 
 // print lista adj
 void print_adj();
@@ -22,22 +20,8 @@ int main(void) {
 	//array ponteiro de listas
 	list *vet[7];
 	for(i = 0; i < 7; i++){
-		vet[i] = init(); 
-		insert(vet[i], 1);
-		insert(vet[i], 2);
+		vet[i] = init(i); 
 	}
-	
-	
-	insert(vet[3], 3);
-	printf("help %i\n\n", empty(vet[0]));
-	printf("help %i\n\n", empty(vet[3]));
-
-	printlist(vet[1]);
-	printlist(vet[3]);
-	for(i = 0; i < 7; i++){
-		cleanlist(vet[i]);
-	}
-
 
 
 	Inicializa_Grafo(grafo);
@@ -61,29 +45,32 @@ int main(void) {
 	Cria_Aresta(grafo, 6, 4, 650);
 	Cria_Aresta(grafo, 6, 2, 2700);
 
-	system("cls");
-
 	Imprime_Matriz(grafo);
 
-	printf(" \n Lista de Adjacencias \n");
+	lista_adj(grafo, vet);
 
 	Imprime_Menu();
-
 	Le_Origem_Destino(MAX_VERTICES - 1, &origem, &destino);
 
 	printf(" Aqui Implementar Distancia entre %s e %s \n", cidades[origem], cidades[destino]);
+	calc_dist(grafo, origem, destino, vet);
+	printlist(vet[origem]);
+	printlist(vet[destino]);
 
 
 
 
+	// for(i = 0; i < 7; i++){
+	// 	printlist(vet[i]);
+	// }
 
+	for(i = 0; i < 7; i++){
+		cleanlist(vet[i]);
+	}
+	
 	return (0);
 }
 
-// popula lista adjacente
-void list_adj(){
-	//
-}
 
 // print lista adj
 void print_adj(){

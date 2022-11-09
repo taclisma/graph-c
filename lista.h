@@ -2,27 +2,31 @@
 #define HEADER_FILE_LIST
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 
 typedef struct node{
-    int dado;
+    int dist;
+    char rot[6];
     struct node *next;
  } node;
 
 typedef struct list{
     node *start;
     node *end;
+    int self;
 } list;
 
 
 //cria lista
-list* init(){
+list* init(int i){
     list *lista = (list*) malloc(sizeof(list));
 	if(lista != NULL){
         lista->start = NULL;
         lista->end = NULL;
+        lista->self = i;
         return lista;
     }
 }
@@ -34,7 +38,7 @@ bool empty(list *l){
 }
 
 
-bool insert(list* l, int d){
+bool insert(list* l, int d, char* s){
     node *aux = l->start;
     node *newnode; 
 
@@ -42,7 +46,8 @@ bool insert(list* l, int d){
     newnode = (node*) malloc(sizeof(node));
     if(!newnode) return false;
     newnode->next = NULL;
-    newnode->dado = d;
+    newnode->dist = d;
+    strcpy(newnode->rot, s);
 
     // insere no inicio
     if(!l->start){ //funciona
@@ -74,11 +79,15 @@ void printlist(list *l){
     if(empty(l)){
         printf("lista vazia\n");
     } else {
+        printf("[%i]-> ", l->self);
+
         while(aux != NULL){
-            printf("%i\n", aux->dado);
-            aux = aux->next;;
+            printf("[%s]:%i ", aux->rot, aux->dist);
+            aux = aux->next;
         }
     }
+
+    printf("\n");
 }
 
 
@@ -89,6 +98,15 @@ void cleanlist(list *l){
         aux2 = aux->next;
         free(aux);
         aux = aux2;
+    }
+}
+
+bool search(list *l, node *n){
+    node *aux = l->start;
+
+    while(aux != NULL){
+        if(aux == n) return true;
+        else return false;
     }
 }
 
